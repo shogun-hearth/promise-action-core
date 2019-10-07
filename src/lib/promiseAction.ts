@@ -5,8 +5,8 @@ type PromiseDispatchAction<P extends string, S extends string, E extends string,
 
 export type Dispatcher<Args = any, P extends string = string, S extends string = string, E extends string = string, Response = any, Error = any> =
   (args: Args) =>
-    (dispatch: (action: PromiseDispatchAction<P, S, E, Response, Error>) => Promise<void>) =>
-      Promise<void>;
+    (dispatch: (action: PromiseDispatchAction<P, S, E, Response, Error>) => void) =>
+      Promise<Response>;
 
 export type DispatchAction<T extends Dispatcher> = Parameters<Parameters<ReturnType<T>>[0]>[0];
 
@@ -70,7 +70,7 @@ class PromiseAction<Args extends {}, Response, Error> {
       pendingType: P,
       successType: S,
       errorType: E,
-      partialArgsOrFuncs: { [key in T]: ((state: State) => Args[key]) | Args[key]; }
+      partialArgsOrFuncs: { [key in T]?: ((state: State) => Args[key]) | Args[key]; }
     ) : Dispatcher<Omit<Args, T>, P, S, E, Response, Error> {
     return (args: Omit<Args, T>) =>
       async (
@@ -91,11 +91,13 @@ class PromiseAction<Args extends {}, Response, Error> {
             type: successType,
             payload: response,
           });
+          return response;
         } catch (e) {
           dispatch({
             type: errorType,
             payload: e,
           });
+          throw e;
         }
       }
   }
