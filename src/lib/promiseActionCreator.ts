@@ -42,30 +42,39 @@ export class PromiseActionCreator<
         ) => {
           let responses: R[] = [];
           let errors: Error[] = [];
+          let finished = false;
 
           const bag: MiddlewareBag<Config, Response, Error, RejectionError> = {
             responses,
             errors,
             config: this.config,
-            resolve: resolve as (r: Response) => void,
-            reject,
+            resolve: (r: Response): void => {
+              finished = true;
+              resolve(r as R);
+            },
+            reject: (e: RejectionError): void => {
+              finished = true;
+              reject(e);
+            },
           };
 
-          while(true) {
+          while(!finished) {
             try {
               const response = await action(args);
               responses.push(response);
-      
-              this.responseMiddlewares.forEach(middleware => {
+
+              for (let middleware of this.responseMiddlewares) {
                 middleware(response, bag);
-              });
+                if (finished) break;
+              }
             } catch (e) {
               const error: Error = e;
               errors.push(error);
-      
-              this.errorMiddlewares.forEach(middleware => {
+
+              for (let middleware of this.errorMiddlewares) {
                 middleware(error, bag);
-              });
+                if (finished) break;
+              }
             }
 
             await timeout(this.config.interval);

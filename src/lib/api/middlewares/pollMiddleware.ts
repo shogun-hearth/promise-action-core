@@ -6,10 +6,10 @@ export default (
     reject,
     config,
   }: ApiMiddlewareBag
-): void => {
+) => {
   const pollResponses = responses.filter(response => response.status === 202);
   // If we have had more 202 errors than the limit, we should stop.
-  if (response.status === 202 && pollResponses.length > config.maxPollAttempts) {
+  if (response.status === 202 && pollResponses.length >= config.maxPollAttempts) {
     reject('max_poll_error');
   }
 };

@@ -1,13 +1,14 @@
 {
-  "name": "promise-action",
+  "name": "@promise-action/core",
   "version": "1.0.0",
   "description": "i promise i will do something",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/YOUR_GITHUB_USER_NAME/promise-action",
+  "repository": "https://github.com/shogunenterprises/promise-action-core",
   "license": "MIT",
   "keywords": [],
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "scripts": {
     "describe": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",

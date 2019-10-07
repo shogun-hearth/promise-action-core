@@ -70,7 +70,7 @@ class PromiseAction<Args extends {}, Response, Error> {
       pendingType: P,
       successType: S,
       errorType: E,
-      partialArgsOrFuncs: { [key in T]?: ((state: State) => Args[key]) | Args[key]; }
+      partialArgsOrFuncs: { [key in T]?: ((state: State) => Args[key]) | Args[key]; } = {}
     ) : Dispatcher<Omit<Args, T>, P, S, E, Response, Error> {
     return (args: Omit<Args, T>) =>
       async (
