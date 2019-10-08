@@ -1,7 +1,6 @@
 import { ApiMiddlewareBag, ApiError } from '../types';
 
 export default (error: ApiError, { reject, errors, config }: ApiMiddlewareBag): void => {
-  console.log('REJECT', error);
   if (!error.response || error.code === '502' || error.code === '504') {
     const attempts = errors.length;
     // Stop trying if attempts exceed max allowed attempts
@@ -13,7 +12,6 @@ export default (error: ApiError, { reject, errors, config }: ApiMiddlewareBag): 
       }
     }
   } else {
-    console.log('REJECTED');
     reject(error);
   }
 };
