@@ -93,11 +93,12 @@ class PromiseAction<Args extends {}, Response, Error> {
           });
           return response;
         } catch (e) {
+          const error: Error = e;
           dispatch({
             type: errorType,
-            payload: e,
+            payload: error,
           });
-          throw e;
+          throw error;
         }
       }
   }

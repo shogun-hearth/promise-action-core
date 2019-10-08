@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
+
 import PromiseAction from '../promiseAction';
-import usePromiseAction, { State, Options } from './usePromiseAction';
+import useLazyAction, { State, Options } from './useLazyAction';
 
 type Result<Data, Error> = State<Data, Error> & {
   run: () => Promise<Data>;
@@ -10,9 +12,15 @@ export default <Args, Data, Error>(
   args: Args,
   partialOpts: Partial<Options> = {},
 ): Result<Data, Error> => {
-  const { run, ...state } = usePromiseAction(promiseAction, {}, partialOpts);
+  const { run, ...state } = useLazyAction(promiseAction, {}, { initialLoading: true, ...partialOpts });
+  const reload: () => Promise<Data> = () => run(args);
+  
+  useEffect(() => {
+    reload();
+  }, []);
+
   return ({
-    run: () => run(args),
+    run: reload,
     ...state,
   });
 };

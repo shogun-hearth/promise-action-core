@@ -1,2 +1,2 @@
-export { default as useAutoPromiseAction } from './useAutoPromiseAction';
-export { default as usePromiseAction } from './usePromiseAction';
+export { default as useAction } from './useAction';
+export { default as useLazyAction } from './useLazyAction';
