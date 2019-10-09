@@ -1,5 +1,5 @@
 {
-  "name": "@shogunenterprises/promise-action",
+  "name": "promise-action",
   "version": "1.0.3",
   "description": "i promise i will do something",
   "main": "build/main/index.js",
