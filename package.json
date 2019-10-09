@@ -8,9 +8,6 @@
   "repository": "https://github.com/shogunenterprises/promise-action-core",
   "license": "MIT",
   "keywords": [],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "scripts": {
     "describe": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
