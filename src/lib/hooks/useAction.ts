@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import PromiseAction from '../promiseAction';
 import useLazyAction, { State, Options } from './useLazyAction';
@@ -13,11 +13,11 @@ export default <Args, Data, Error>(
   partialOpts: Partial<Options> = {},
 ): Result<Data, Error> => {
   const { run, ...state } = useLazyAction(promiseAction, {}, { initialLoading: true, ...partialOpts });
-  const reload: () => Promise<Data> = () => run(args);
+  const reload = useCallback(() => run(args), [args]);
   
   useEffect(() => {
     reload();
-  }, []);
+  }, [JSON.stringify(args)]);
 
   return ({
     run: reload,
