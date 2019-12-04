@@ -64,7 +64,7 @@ export default <Args, Data, Error, PartialArgs extends keyof Args>(
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, { loading: true });
+  const [state, dispatch] = useReducer(reducer, { loading: opts.initialLoading });
 
   return ({
     run: (args: Omit<Args, PartialArgs>) => dispatcher(args)(dispatch),
