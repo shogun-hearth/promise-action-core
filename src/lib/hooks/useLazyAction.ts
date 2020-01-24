@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useCallback } from 'react';
 import PromiseAction, { DispatchAction } from '../promiseAction';
 
 export type State<Data, Error> = {
@@ -65,9 +65,10 @@ export default <Args, Data, Error, PartialArgs extends keyof Args>(
   }
 
   const [state, dispatch] = useReducer(reducer, { loading: opts.initialLoading });
+  const run = useCallback((args: Omit<Args, PartialArgs>) => dispatcher(args)(dispatch), [dispatcher, dispatch]);
 
   return ({
-    run: (args: Omit<Args, PartialArgs>) => dispatcher(args)(dispatch),
+    run,
     ...state,
   });
 };
