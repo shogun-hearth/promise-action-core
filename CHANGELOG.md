@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### 1.0.8 (2020-06-16)
 
-
+[BREAKING] Dispatcher now throws actual Error object for max poll error and network error
 
 ### 1.0.7 (2020-01-24)
 
-Bugfix from @sdzharkov
+Fix bug with useAction and useLazyAction
 
 ### 1.0.0
 
