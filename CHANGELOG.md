@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### 1.0.9 (2020-06-16)
 
-
+Fix bug with redefining name
 
 ### 1.0.8 (2020-06-16)
 
