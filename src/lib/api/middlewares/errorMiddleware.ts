@@ -1,4 +1,5 @@
 import { ApiMiddlewareBag, ApiError } from '../types';
+import { ApiNetworkError } from '../errors';
 
 export default (error: ApiError, { reject, errors, config }: ApiMiddlewareBag): void => {
   if (!error.response || error.code === '502' || error.code === '504') {
@@ -8,7 +9,7 @@ export default (error: ApiError, { reject, errors, config }: ApiMiddlewareBag): 
       if (error.response) {
         reject(error);
       } else {
-        reject('network_error');
+        reject(new ApiNetworkError());
       }
     }
   } else {

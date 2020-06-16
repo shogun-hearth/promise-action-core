@@ -1,4 +1,5 @@
 import { ApiMiddlewareBag, ApiResponse } from '../types';
+import { ApiMaxPollError } from '../errors';
 
 export default (
   response: ApiResponse, {
@@ -10,6 +11,6 @@ export default (
   const pollResponses = responses.filter(response => response.status === 202);
   // If we have had more 202 errors than the limit, we should stop.
   if (response.status === 202 && pollResponses.length >= config.maxPollAttempts) {
-    reject('max_poll_error');
+    reject(new ApiMaxPollError());
   }
 };
