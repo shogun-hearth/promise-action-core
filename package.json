@@ -53,8 +53,8 @@
     "ts-custom-error": "^3.1.1"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "axios": "^0.21.1"
+    "react": "*",
+    "axios": "*"
   },
   "devDependencies": {
     "@bitjson/npm-scripts-info": "^1.0.0",
